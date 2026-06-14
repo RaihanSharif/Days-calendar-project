@@ -3,10 +3,12 @@
     "version": "1.0.0",
     "scripts": {
         "test": "node common.test.mjs",
-        "dev": "http-server ."
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
     },
     "devDependencies": {
-        "http-server": "^14.1.1"
+        "vite": "^8.0.16"
     },
     "dependencies": {
         "temporal-polyfill": "^0.3.2"

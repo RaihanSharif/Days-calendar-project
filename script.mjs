@@ -1,3 +1,3 @@
 import "temporal-polyfill/global";
 
-console.log("hello world!");
+console.log(Temporal.Now.zonedDateTimeISO().toString());
