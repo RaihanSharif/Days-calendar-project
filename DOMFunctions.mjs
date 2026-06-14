@@ -26,10 +26,6 @@ export function populateYearSelect(
 
 //
 export function displayCalendar(date) {
-    // const date = Temporal.PlainDate.from(
-    //     `${year}-${String(month).padStart(2, "0")}-01`,
-    // );
-
     const monthHeader = document.getElementById("month-header");
     monthHeader.textContent = date.toLocaleString("en-GB", {
         month: "long",
