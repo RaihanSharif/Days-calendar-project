@@ -30,6 +30,12 @@ export function displayCalendar(month, year) {
         `${year}-${String(month).padStart(2, "0")}-01`,
     );
 
+    const monthHeader = document.getElementById("month-header");
+    monthHeader.textContent = date.toLocaleString("en-GB", {
+        month: "long",
+        year: "numeric",
+    });
+
     // In Temporal first day of week is Monday, with value of 1
     // Sunday is 7. This makes the week start on a Sunday
     const offset = date.dayOfWeek % 7;
