@@ -7,11 +7,16 @@ function setup() {
     populateYearSelect();
     displayCalendar(currentDate);
 
+    const prevBtn = document.getElementById("prev-month");
+    prevBtn.addEventListener("click", () => {
+        currentDate = currentDate.subtract({ months: 1 });
+        displayCalendar(currentDate);
+    });
+
     const nextBtn = document.getElementById("next-month");
     nextBtn.addEventListener("click", (e) => {
         currentDate = currentDate.add({ months: 1 });
         displayCalendar(currentDate);
-        console.log(currentDate.toString());
     });
 }
 
