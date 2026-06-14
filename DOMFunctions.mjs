@@ -23,3 +23,52 @@ export function populateYearSelect(
         yearSelect.appendChild(yearOption);
     }
 }
+
+//
+export function displayCalendar(month, year) {
+    const date = Temporal.PlainDate.from(
+        `${year}-${String(month).padStart(2, "0")}-01`,
+    );
+
+    // In Temporal first day of week is Monday, with value of 1
+    // Sunday is 7. This makes the week start on a Sunday
+    const offset = date.dayOfWeek % 7;
+
+    const container = document.getElementById("calendar-dates");
+    // resets container with header row every time
+    container.innerHTML = `
+    <div class="cal-heading">Sunday</div>
+    <div class="cal-heading">Monday</div>
+    <div class="cal-heading">Tuesday</div>
+    <div class="cal-heading">Wednesday</div>
+    <div class="cal-heading">Thursday</div>
+    <div class="cal-heading">Friday</div>
+    <div class="cal-heading">Saturday</div>
+`;
+
+    // Calendar cells before the first day of the month are created first
+    for (let i = 0; i < offset; i++) {
+        const dateCell = document.createElement("div");
+        dateCell.classList.add("date-box");
+        dateCell.classList.add("empty-box");
+        container.appendChild(dateCell);
+    }
+
+    // Then the cells for the actual month
+    // only the cells with actual calendar dates get a value attribute
+    for (let i = 1; i < date.daysInMonth + 1; i++) {
+        const dateCell = document.createElement("div");
+        dateCell.className = "date-box";
+        dateCell.textContent = String(i);
+        dateCell.dataset.value = String(i);
+        container.appendChild(dateCell);
+    }
+
+    // Then the padding at the end
+    for (let i = offset + date.daysInMonth; i < 35; i++) {
+        const dateCell = document.createElement("div");
+        dateCell.classList.add("date-box");
+        dateCell.classList.add("empty-box");
+        container.appendChild(dateCell);
+    }
+}
