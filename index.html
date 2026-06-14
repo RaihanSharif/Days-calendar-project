@@ -1,9 +1,60 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
     <head>
-        <script type="module" src="common.mjs"></script>
-        <script type="module" src="web.mjs"></script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Special Days Calendar</title>
+        <script type="module" src="script.mjs"></script>
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
+        <header>
+            <h1>Special Days Calendar</h1>
+        </header>
+        <main>
+            <div
+                class="calendar-controls"
+                role="group"
+                aria-label="Calendar navigation">
+                <div id="month-select-container">
+                    <select
+                        name="select-month"
+                        id="select-month"
+                        aria-label="Month">
+                        <option value="" disabled selected>-- MONTH --</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select
+                        name="select-year"
+                        id="select-year"
+                        aria-label="Year">
+                        <option value="" selected disabled>-- YEAR --</option>
+                    </select>
+                </div>
+                <div id="month-nav-btn-container">
+                    <button id="prev-month" aria-label="Previous month">
+                        Previous
+                    </button>
+                    <button id="next-month" aria-label="Next month">
+                        Next
+                    </button>
+                </div>
+            </div>
+            <div id="calendar-container" role="region" aria-label="Calendar">
+                <h2 id="month-header"></h2>
+                <div id="calendar-dates"></div>
+            </div>
+        </main>
     </body>
 </html>

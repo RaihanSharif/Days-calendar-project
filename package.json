@@ -1,7 +1,16 @@
 {
-  "name": "project-days-calendar",
-  "version": "1.0.0",
-  "scripts": {
-    "test": "node common.test.mjs"
-  }
+    "name": "project-days-calendar",
+    "version": "1.0.0",
+    "scripts": {
+        "test": "node common.test.mjs",
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "vite": "^8.0.16"
+    },
+    "dependencies": {
+        "temporal-polyfill": "^0.3.2"
+    }
 }
