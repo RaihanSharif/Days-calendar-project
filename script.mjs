@@ -1,3 +1,8 @@
 import "temporal-polyfill/global";
+import { populateYearSelect } from "./DOMFunctions.mjs";
 
-console.log(Temporal.Now.zonedDateTimeISO().toString());
+function setup() {
+    populateYearSelect();
+}
+
+setup();
