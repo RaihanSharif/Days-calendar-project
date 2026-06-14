@@ -70,11 +70,14 @@ export function displayCalendar(month, year) {
         container.appendChild(dateCell);
     }
 
-    // Then the padding at the end
-    for (let i = offset + date.daysInMonth; i < 35; i++) {
-        const dateCell = document.createElement("div");
-        dateCell.classList.add("date-box");
-        dateCell.classList.add("empty-box");
-        container.appendChild(dateCell);
+    console.log((offset + date.daysInMonth) % 7);
+    if ((offset + date.daysInMonth) % 7 !== 0) {
+        // Then the padding at the end
+        for (let i = offset + date.daysInMonth; i < 35; i++) {
+            const dateCell = document.createElement("div");
+            dateCell.classList.add("date-box");
+            dateCell.classList.add("empty-box");
+            container.appendChild(dateCell);
+        }
     }
 }
