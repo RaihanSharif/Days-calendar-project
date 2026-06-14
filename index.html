@@ -1,9 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
     <head>
         <script type="module" src="common.mjs"></script>
         <script type="module" src="web.mjs"></script>
     </head>
     <body>
+        <header>
+            <h1>Special days calendar</h1>
+        </header>
+        <main>
+            <div
+                class="calendar-controls"
+                role="group"
+                aria-label="Calendar navigation">
+                <div id="month-select-container">
+                    <select
+                        name="select-month"
+                        id="select-month"
+                        aria-label="Month">
+                        <option value="" disabled selected>-- Month --</option>
+                        <option value="jan">January</option>
+                        <option value="feb">February</option>
+                        <option value="mar">March</option>
+                        <option value="apr">April</option>
+                        <option value="may">May</option>
+                        <option value="jun">June</option>
+                        <option value="jul">July</option>
+                        <option value="aug">August</option>
+                        <option value="sep">September</option>
+                        <option value="oct">October</option>
+                        <option value="nov">November</option>
+                        <option value="dec">December</option>
+                    </select>
+                    <select
+                        name="select-year"
+                        id="select-year"
+                        aria-label="Year"></select>
+                </div>
+                <div id="month-nav-btn-container">
+                    <button id="prev-month" aria-label="Previous month">
+                        Previous
+                    </button>
+                    <button id="next-month" aria-label="Next month">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </main>
     </body>
 </html>
