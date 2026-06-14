@@ -25,10 +25,10 @@ export function populateYearSelect(
 }
 
 //
-export function displayCalendar(month, year) {
-    const date = Temporal.PlainDate.from(
-        `${year}-${String(month).padStart(2, "0")}-01`,
-    );
+export function displayCalendar(date) {
+    // const date = Temporal.PlainDate.from(
+    //     `${year}-${String(month).padStart(2, "0")}-01`,
+    // );
 
     const monthHeader = document.getElementById("month-header");
     monthHeader.textContent = date.toLocaleString("en-GB", {
@@ -43,14 +43,14 @@ export function displayCalendar(month, year) {
     const container = document.getElementById("calendar-dates");
     // resets container with header row every time
     container.innerHTML = `
-    <div class="cal-heading">Sunday</div>
-    <div class="cal-heading">Monday</div>
-    <div class="cal-heading">Tuesday</div>
-    <div class="cal-heading">Wednesday</div>
-    <div class="cal-heading">Thursday</div>
-    <div class="cal-heading">Friday</div>
-    <div class="cal-heading">Saturday</div>
-`;
+        <div class="cal-heading">Sunday</div>
+        <div class="cal-heading">Monday</div>
+        <div class="cal-heading">Tuesday</div>
+        <div class="cal-heading">Wednesday</div>
+        <div class="cal-heading">Thursday</div>
+        <div class="cal-heading">Friday</div>
+        <div class="cal-heading">Saturday</div>
+    `;
 
     // Calendar cells before the first day of the month are created first
     for (let i = 0; i < offset; i++) {
