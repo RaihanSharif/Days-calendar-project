@@ -1,7 +1,11 @@
 {
-  "name": "project-days-calendar",
-  "version": "1.0.0",
-  "scripts": {
-    "test": "node common.test.mjs"
-  }
+    "name": "project-days-calendar",
+    "version": "1.0.0",
+    "scripts": {
+        "test": "node common.test.mjs",
+        "dev": "http-server ."
+    },
+    "devDependencies": {
+        "http-server": "^14.1.1"
+    }
 }
