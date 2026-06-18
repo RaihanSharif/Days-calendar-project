@@ -1,3 +1,6 @@
+import events from "./days.json";
+import { getEventDate } from "./dateconversion.mjs";
+
 // helper function to generate ± range years for the year selector
 export function getYearRange(referenceDate, range) {
     const startYear = referenceDate.subtract({ years: range });
@@ -24,7 +27,22 @@ export function populateYearSelect(
     }
 }
 
-//
+// Get all event of a given month and year (numeric)
+export function getMonthEvents(month, year) {
+    const monthName = new Intl.DateTimeFormat("en", { month: "long" }).format(
+        new Date(2000, month - 1),
+    );
+    const filtered = events.filter((event) => event.monthName === monthName);
+
+    const eventsWithDate = filtered.map((event) => {
+        const eventDate = getEventDate(event, year).getDate();
+
+        return { eventName: event["name"], dayOfMonth: eventDate };
+    });
+    return eventsWithDate;
+}
+
+// Temporal date input
 export function displayCalendar(date) {
     const monthHeader = document.getElementById("month-header");
     monthHeader.textContent = date.toLocaleString("en-GB", {
@@ -56,13 +74,29 @@ export function displayCalendar(date) {
         container.appendChild(dateCell);
     }
 
-    // Then the cells for the actual month
-    // only the cells with actual calendar dates get a value attribute
+    // All the events for this month. e.g.[{eventName, dayOfMonth}]
+    const eventsWithDates = getMonthEvents(date.month, date.year);
+
     for (let i = 1; i < date.daysInMonth + 1; i++) {
         const dateCell = document.createElement("div");
         dateCell.className = "date-box";
-        dateCell.textContent = String(i);
         dateCell.dataset.value = String(i);
+
+        const dayNumber = document.createElement("div");
+        dayNumber.className = "day-number";
+        dayNumber.textContent = String(i);
+        dateCell.appendChild(dayNumber);
+
+        // all events for this day of the month
+        const dayEvents = eventsWithDates.filter((ev) => ev.dayOfMonth === i);
+
+        dayEvents.forEach(({ eventName }) => {
+            const eventItem = document.createElement("div");
+            eventItem.className = "event-item";
+            eventItem.textContent = eventName;
+            dateCell.appendChild(eventItem);
+        });
+
         container.appendChild(dateCell);
     }
 }
