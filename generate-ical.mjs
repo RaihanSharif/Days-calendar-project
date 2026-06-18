@@ -51,4 +51,4 @@ function generateICS(events) {
     return lines.join("\r\n"); // .ics spec requires CRLF line endings
 }
 
-writeFileSync("./calendar.ics", generateICS(events));
+writeFileSync("./days.ics", generateICS(events));
