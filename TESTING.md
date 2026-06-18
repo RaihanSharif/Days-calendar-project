@@ -22,7 +22,7 @@ A month select and year select element were added, and if both have valid values
 
 Chose 5 years in past and future from current system date as 'reasonable' range of years.
 
- ### The days from the JSON file must appear correctly when the month they fall in is displayed. For example:
+### The days from the JSON file must appear correctly when the month they fall in is displayed. For example:
 
 Tested manually, and using unit tests to ensure JSON file is correctly converted to desired date, and displayed on calendar.
 
@@ -38,7 +38,7 @@ Tested manually. Code always generates events from the provided JSON file.
 
 ### Your GitHub repository must contain at least one unit test which demonstrates that your code works. End to end tests are optional. Testing via the DOM is optional.
 
-unit test can be found file...
+unit test can be found in the [dateconversion.test.js](./dateconversion.test.mjs)! file
 
 ### Every view of your website must be accessible (i.e. all months). We will test this by making sure that "Snapshot" mode of Lighthouse gives 100% accessibility for any view we look at.
 
@@ -46,4 +46,3 @@ Pages with or without events both get maximum accessbility score.
 <img width="1406" height="771" alt="Screenshot 2026-06-18 at 18 33 43" src="https://github.com/user-attachments/assets/014162e6-558a-4179-a1b1-6cd4199d73ca" />
 
 <img width="1410" height="765" alt="Screenshot 2026-06-18 at 18 33 50" src="https://github.com/user-attachments/assets/6172ee9a-6abb-49a4-982d-9e4a7fcc3e35" />
-
