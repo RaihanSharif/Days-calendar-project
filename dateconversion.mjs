@@ -1,61 +1,54 @@
 // Map each month to a number
 const MONTH_TO_NUM = {
-  january: 0,
-  february: 1,
-  march: 2,
-  april: 3,
-  may: 4,
-  june: 5,
-  july: 6,
-  august: 7,
-  september: 8,
-  october: 9,
-  november: 10,
-  december: 11,
+    january: 0,
+    february: 1,
+    march: 2,
+    april: 3,
+    may: 4,
+    june: 5,
+    july: 6,
+    august: 7,
+    september: 8,
+    october: 9,
+    november: 10,
+    december: 11,
 };
 
 // Map each day of the week to a number
 const DAY_TO_NUM = {
-  sunday: 0,
-  monday: 1,
-  tuesday: 2,
-  wednesday: 3,
-  thursday: 4,
-  friday: 5,
-  saturday: 6,
+    sunday: 0,
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
 };
 
 // Map ordinal dates to cardinal integers
 // e.g. first = first <day of Week> of the month
 // fifth and last?
 const ORDINAL_TO_CARDINAL = {
-  first: 1,
-  second: 2,
-  third: 3,
-  fourth: 4,
-  fifth: 5,
-  last: -1,
+    first: 1,
+    second: 2,
+    third: 3,
+    fourth: 4,
+    fifth: 5,
+    last: -1,
 };
 
 // Takes event object of form { name, monthName, dayName, occurrence, descriptionURL }
 // converts string monthName, dayName, and occurrence to numeric values.
 function normalizeEvent(event) {
-  const month = MONTH_TO_NUM[event.monthName.toLowerCase()];
-  const weekday = DAY_TO_NUM[event.dayName.toLowerCase()];
-  const n =
-    ORDINAL_TO_CARDINAL[event.occurrence.toLowerCase()];
+    const month = MONTH_TO_NUM[event.monthName.toLowerCase()];
+    const weekday = DAY_TO_NUM[event.dayName.toLowerCase()];
+    const n = ORDINAL_TO_CARDINAL[event.occurrence.toLowerCase()];
 
-  if (
-    month === undefined ||
-    weekday === undefined ||
-    n === undefined
-  ) {
-    throw new Error(
-      `Invalid event definition: ${JSON.stringify(event)}`,
-    );
-  }
+    if (month === undefined || weekday === undefined || n === undefined) {
+        throw new Error(`Invalid event definition: ${JSON.stringify(event)}`);
+    }
 
-  return { month, weekday, n };
+    return { month, weekday, n };
 }
 
 /**
@@ -78,56 +71,48 @@ function normalizeEvent(event) {
  * nthWeekdayOfMonth(2026, 11, 5, -1); // → Date: 2026-12-25
  */
 export function nthWeekdayOfMonth(year, month, weekday, n) {
-  if (n === -1) {
-    const lastDay = new Date(year, month + 1, 0).getDate();
-    const lastDate = new Date(year, month, lastDay);
-    const diff = (lastDate.getDay() - weekday + 7) % 7;
-    return new Date(year, month, lastDay - diff);
-  }
-  const firstDay = new Date(year, month, 1);
-  const offset = (weekday - firstDay.getDay() + 7) % 7;
-  const day = 1 + offset + (n - 1) * 7;
-  const result = new Date(year, month, day);
-  if (result.getMonth() !== month) {
-    throw new Error("invalid occurrence for this day");
-  }
+    if (n === -1) {
+        const lastDay = new Date(year, month + 1, 0).getDate();
+        const lastDate = new Date(year, month, lastDay);
+        const diff = (lastDate.getDay() - weekday + 7) % 7;
+        return new Date(year, month, lastDay - diff);
+    }
+    const firstDay = new Date(year, month, 1);
+    const offset = (weekday - firstDay.getDay() + 7) % 7;
+    const day = 1 + offset + (n - 1) * 7;
+    const result = new Date(year, month, day);
+    if (result.getMonth() !== month) {
+        throw new Error("invalid occurrence for this day");
+    }
 
-  return result;
+    return result;
 }
 
 export function getEventDate(event, year) {
-  const { month, weekday, n } = normalizeEvent(event);
-  return nthWeekdayOfMonth(year, month, weekday, n);
+    const { month, weekday, n } = normalizeEvent(event);
+    return nthWeekdayOfMonth(year, month, weekday, n);
 }
 
-// the following serves to generate the ical data
+// -------------------------
+// The following serves to generate the ical data
+// ------------------------
 
-const RRULE_DAY_TO_NUM = {
-  sunday: "SU",
-  monday: "MO",
-  tuesday: "TU",
-  wednesday: "WE",
-  thursday: "TH",
-  friday: "FR",
-  saturday: "SA",
+// Map day name to RRULE_BYDAY code
+const DAY_TO_RRULE_BYDAY = {
+    sunday: "SU",
+    monday: "MO",
+    tuesday: "TU",
+    wednesday: "WE",
+    thursday: "TH",
+    friday: "FR",
+    saturday: "SA",
 };
 
-const RRULE_ORDINAL_TO_CARDINAL = {
-  first: "1",
-  second: "2",
-  third: "3",
-  fourth: "4",
-  fifth: "5",
-  last: "-1",
-};
-
+// convert day, month and occurence of event to format that is suitable for
+// iCal events
 export function eventToRRule(event) {
-  const day = RRULE_DAY_TO_NUM[event.dayName.toLowerCase()];
-  const n =
-    RRULE_ORDINAL_TO_CARDINAL[
-      event.occurrence.toLowerCase()
-    ];
-  const month =
-    MONTH_TO_NUM[event.monthName.toLowerCase()] + 1; // RRULE months are 1-based
-  return `RRULE:FREQ=YEARLY;BYDAY=${n}${day};BYMONTH=${month}`;
+    const day = DAY_TO_RRULE_BYDAY[event.dayName.toLowerCase()];
+    const n = ORDINAL_TO_CARDINAL[event.occurrence.toLowerCase()].toString();
+    const month = MONTH_TO_NUM[event.monthName.toLowerCase()] + 1; // RRULE months are 1-based
+    return `RRULE:FREQ=YEARLY;BYDAY=${n}${day};BYMONTH=${month}`;
 }
