@@ -98,27 +98,3 @@ export function getEventDate(event, year) {
     const { month, weekday, n } = normalizeEvent(event);
     return nthWeekdayOfMonth(year, month, weekday, n);
 }
-
-// -------------------------
-// The following serves to generate the ical data
-// ------------------------
-
-// Map day name to RRULE_BYDAY code
-const DAY_TO_RRULE_BYDAY = {
-    sunday: "SU",
-    monday: "MO",
-    tuesday: "TU",
-    wednesday: "WE",
-    thursday: "TH",
-    friday: "FR",
-    saturday: "SA",
-};
-
-// convert day, month and occurence of event to format that is suitable for
-// iCal events
-export function eventToRRule(event) {
-    const day = DAY_TO_RRULE_BYDAY[event.dayName.toLowerCase()];
-    const n = ORDINAL_TO_CARDINAL[event.occurrence.toLowerCase()].toString();
-    const month = MONTH_TO_NUM[event.monthName.toLowerCase()] + 1; // RRULE months are 1-based
-    return `RRULE:FREQ=YEARLY;BYDAY=${n}${day};BYMONTH=${month}`;
-}
