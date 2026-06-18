@@ -1,4 +1,4 @@
-import { eventToRRule, getEventDate } from "./dateconversion.mjs";
+import { getEventDate } from "./dateconversion.mjs";
 import { readFileSync, writeFileSync } from "fs";
 
 const events = JSON.parse(readFileSync("./days.json", "utf8"));
@@ -20,31 +20,29 @@ function generateICS(events) {
     ];
 
     for (const event of events) {
-        const rrule = eventToRRule(event);
-        let anchor;
-        try {
-            anchor = getEventDate(event, new Date().getFullYear());
-        } catch {
+        for (let year = 2020; year <= 2030; year++) {
+            let anchor;
             try {
-                anchor = getEventDate(event, new Date().getFullYear() + 1);
+                anchor = getEventDate(event, year);
             } catch {
-                console.warn(`Skipping ${event.name}: no valid date found`);
+                console.warn(
+                    `Skipping ${event.name} ${year}: no valid date found`,
+                );
                 continue;
             }
+
+            const dtstart = toICSDate(anchor);
+            const dtend = toICSDate(new Date(anchor.getTime() + 86400000));
+
+            lines.push(
+                "BEGIN:VEVENT",
+                `SUMMARY:${event.name}`,
+                `DTSTART;VALUE=DATE:${dtstart}`,
+                `DTEND;VALUE=DATE:${dtend}`,
+                `UID:${event.name.replace(/\s+/g, "-").toLowerCase()}-${year}@yourapp`,
+                "END:VEVENT",
+            );
         }
-
-        const dtstart = toICSDate(anchor);
-        const dtend = toICSDate(new Date(anchor.getTime() + 86400000)); // +1 day
-
-        lines.push(
-            "BEGIN:VEVENT",
-            `SUMMARY:${event.name}`,
-            `DTSTART;VALUE=DATE:${dtstart}`,
-            `DTEND;VALUE=DATE:${dtend}`,
-            rrule,
-            `UID:${event.name.replace(/\s+/g, "-").toLowerCase()}@yourapp`,
-            "END:VEVENT",
-        );
     }
 
     lines.push("END:VCALENDAR");
