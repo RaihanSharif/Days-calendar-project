@@ -27,12 +27,20 @@ export function populateYearSelect(
     }
 }
 
-// Get all event of a given month and year (numeric)
-// filter out invalid occrences (e.g 7th Monday)
+/**
+ * Returns all events for a given month and year, filtering out invalid occurrences
+ * (e.g. a 5th Monday in a month that only has 4).
+ *
+ * @param {number} month - The month number, one-based (1 = January, 12 = December).
+ * @param {number} year - The full year (e.g. 2026).
+ * @returns {{ eventName: string, dayOfMonth: number }[]} Array of events with their date in the month.
+ */
 export function getMonthEvents(month, year) {
     const monthName = new Intl.DateTimeFormat("en", { month: "long" }).format(
         new Date(2000, month - 1),
     );
+
+    console.log(monthName);
     const filtered = events.filter((event) => event.monthName === monthName);
 
     const eventsWithDate = filtered.flatMap((event) => {
