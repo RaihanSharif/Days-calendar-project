@@ -46,3 +46,19 @@ Pages with or without events both get maximum accessbility score.
 <img width="1406" height="771" alt="Screenshot 2026-06-18 at 18 33 43" src="https://github.com/user-attachments/assets/014162e6-558a-4179-a1b1-6cd4199d73ca" />
 
 <img width="1410" height="765" alt="Screenshot 2026-06-18 at 18 33 50" src="https://github.com/user-attachments/assets/6172ee9a-6abb-49a4-982d-9e4a7fcc3e35" />
+
+
+### Produce a script that can be run in a terminal via `node`, which creates an [iCal format](https://icalendar.org/) file named `days.ics` containing entries for every day in the JSON file. You must not use recurring events. There must be one entry per commemorative day per year from 2020 until 2030 (inclusive). The events should be "whole day" events - they should not have start/end times.
+
+Tested by importing the created `days.ics` file and then checking if right events were present in 2020, 2026, 2030 and not in 2019 and 2031.
+
+### Logic for calculating dates must be shared between the web generator and the iCal generator.
+
+Both calendar and ical script use the `getEventDate()` function.
+
+### The events in the calendar must be whole-day events, and not have a start/end time.
+
+Checked on google calendar.
+
+
+
