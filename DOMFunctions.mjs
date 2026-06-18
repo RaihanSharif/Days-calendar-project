@@ -54,7 +54,11 @@ export function getMonthEvents(month, year) {
     return eventsWithDate;
 }
 
-// Temporal date input
+/**
+ * Renders the calendar for a given month into the DOM.
+ *
+ * @param {Temporal.PlainDate} date - The month to display;
+ */
 export function displayCalendar(date) {
     const monthHeader = document.getElementById("month-header");
     monthHeader.textContent = date.toLocaleString("en-GB", {
