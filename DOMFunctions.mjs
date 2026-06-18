@@ -28,16 +28,20 @@ export function populateYearSelect(
 }
 
 // Get all event of a given month and year (numeric)
+// filter out invalid occrences (e.g 7th Monday)
 export function getMonthEvents(month, year) {
     const monthName = new Intl.DateTimeFormat("en", { month: "long" }).format(
         new Date(2000, month - 1),
     );
     const filtered = events.filter((event) => event.monthName === monthName);
 
-    const eventsWithDate = filtered.map((event) => {
-        const eventDate = getEventDate(event, year).getDate();
-
-        return { eventName: event["name"], dayOfMonth: eventDate };
+    const eventsWithDate = filtered.flatMap((event) => {
+        try {
+            const dayOfMonth = getEventDate(event, year).getDate();
+            return [{ eventName: event["name"], dayOfMonth }];
+        } catch {
+            return []; // skip when invalid instance
+        }
     });
     return eventsWithDate;
 }
