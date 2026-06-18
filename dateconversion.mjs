@@ -88,6 +88,12 @@ export function nthWeekdayOfMonth(year, month, weekday, n) {
     return result;
 }
 
+/**
+ * Calculates the exact date of an event
+ * @param {Object} event
+ * @param {number} year - the full year e.g. 2026
+ * @returns {Date} The exact date of event
+ */
 export function getEventDate(event, year) {
     const { month, weekday, n } = normalizeEvent(event);
     return nthWeekdayOfMonth(year, month, weekday, n);
